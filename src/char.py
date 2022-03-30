@@ -4,7 +4,7 @@ class Joe (pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.load_sprite()
         self.x = 450
-        self.y = 100
+        self.y = 400
         self.rect = pygame.rect.Rect(self.x,self.y,self.sprite.get_width(),self.sprite.get_height())
         
     def movement(self):
@@ -20,4 +20,4 @@ class Joe (pygame.sprite.Sprite):
         image.fill((8, 132, 68))
         image.blit(pygame.image.load('./resources/character.png'), (0,0), (177, 137, 144, 416))
         self.sprite = image
-        
+        self.sprite = pygame.transform.scale(self.sprite, (self.sprite.get_width() / 2, self.sprite.get_height() / 2))
