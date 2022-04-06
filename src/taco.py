@@ -15,7 +15,7 @@ class Taco (pygame.sprite.Sprite):
             self.image = image
             self.image = pygame.transform.scale(self.image, (self.image.get_width() / 12, self.image.get_height() / 12))
             self.image.set_colorkey((8, 132, 68))
-    def gravity(self):
+    def update(self):
         self.v = 0.1
         self.y += self.v
     def updateimage(self):

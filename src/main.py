@@ -16,12 +16,9 @@ while running:
             group.add(taco.Taco())
         if event.type == pygame.QUIT:
             pygame.quit()
-    for Taco in group:
-        Taco.gravity()
     screen.blit(player.sprite, (player.x,player.y))
     group.draw(screen)
+    group.update()
     pygame.display.flip()
     player.moving()
 pygame.quit()
-
-

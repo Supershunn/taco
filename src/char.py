@@ -22,7 +22,7 @@ class Joe (pygame.sprite.Sprite):
         self.sprite = image
         self.sprite = pygame.transform.scale(self.sprite, (self.sprite.get_width() / 2, self.sprite.get_height() / 2))
     def moving(self):
-        self.speed = 0.1
+        self.speed = 0.15
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.x -= self.speed
