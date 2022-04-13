@@ -18,5 +18,4 @@ class Taco (pygame.sprite.Sprite):
     def update(self):
         self.v = 0.1
         self.y += self.v
-    def updateimage(self):
-        self.image = pygame.rect.Rect(self.x,self.y,self.image.get_width(),self.image.get_height())
+        self.rect = pygame.rect.Rect(self.x,self.y,self.image.get_width(),self.image.get_height())
