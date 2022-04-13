@@ -1,6 +1,7 @@
 import pygame
 import random
-
+from tools import font, running, screen
+gameover = font.render('Game Over!', False, ('BLUE'))
 class Taco (pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -16,8 +17,12 @@ class Taco (pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image, (self.image.get_width() / 12, self.image.get_height() / 12))
             self.image.set_colorkey((8, 132, 68))
     def update(self):
+        global running
         self.v = 0.1
         self.y += self.v
         if self.y >= 600:
-           self.kill()
+            print ('joe')
+            screen.blit(gameover, (450, 300))
+            self.kill()
+            running = False
         self.rect = pygame.rect.Rect(self.x,self.y,self.image.get_width(),self.image.get_height())
