@@ -32,3 +32,4 @@ class Joe (pygame.sprite.Sprite):
             self.x = 900 - self.sprite.get_width()
         if self.x < 0:
             self.x = 0
+        self.rect = pygame.rect.Rect(self.x,self.y,self.sprite.get_width(),self.sprite.get_height())

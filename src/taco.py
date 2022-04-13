@@ -18,4 +18,6 @@ class Taco (pygame.sprite.Sprite):
     def update(self):
         self.v = 0.1
         self.y += self.v
+        if self.y >= 600:
+           self.kill()
         self.rect = pygame.rect.Rect(self.x,self.y,self.image.get_width(),self.image.get_height())
