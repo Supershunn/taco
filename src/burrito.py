@@ -21,6 +21,5 @@ class Burrito (pygame.sprite.Sprite):
         self.v = 0.1
         self.y += self.v
         if self.y >= 600:
-            pygame.event.post(pygame.event.Event(events.gameover))
             self.kill()
         self.rect = pygame.rect.Rect(self.x,self.y,self.image.get_width(),self.image.get_height())
