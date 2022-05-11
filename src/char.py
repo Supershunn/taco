@@ -1,4 +1,4 @@
-import pygame
+import pygame, sys, os
 class Joe (pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -18,7 +18,7 @@ class Joe (pygame.sprite.Sprite):
     def load_sprite(self):
         image = pygame.surface.Surface((144, 316))
         image.fill((8, 132, 68))
-        image.blit(pygame.image.load('./resources/character.png'), (0,0), (177, 137, 144, 416))
+        image.blit(pygame.image.load(self.resource_path('resources/character.png')), (0,0), (177, 137, 144, 416))
         self.sprite = image
         self.sprite = pygame.transform.scale(self.sprite, (self.sprite.get_width() / 2, self.sprite.get_height() / 2))
     def moving(self):
@@ -33,3 +33,12 @@ class Joe (pygame.sprite.Sprite):
         if self.x < 0:
             self.x = 0
         self.rect = pygame.rect.Rect(self.x,self.y,self.sprite.get_width(),self.sprite.get_height())
+    def resource_path(self,relative_path):
+        try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+

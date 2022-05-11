@@ -1,11 +1,21 @@
 from os import kill
-import pygame, random, time, char, taco, events, burrito
-from tools import font, screen
+import pygame, random, time, char, taco, events, burrito, sys, os
+from tools import screen
 from taco import running
 from states import States
 pygame.init()
+def resource_path(relative_path):
+    try:
+    # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 score = 0
-soundeffect = pygame.mixer.Sound("./resources/tacoget.wav")
+font = pygame.font.Font(resource_path("./resources/PUSAB.otf"),32)
+soundeffect = pygame.mixer.Sound(resource_path("./resources/tacoget.wav"))
+gameovereffect = pygame.mixer.Sound(resource_path("./resources/oof.mp3"))
 player = char.Joe()
 group = pygame.sprite.Group()
 burritogroup = pygame.sprite.Group()
@@ -18,10 +28,14 @@ pygame.time.set_timer(NEW_TACO,3000)
 state = States.TITLE
 def titlescreen():
     global state, running
+    howtoplay = font.render('Catch all the tacos falling while avoiding', False, ('WHITE'))
+    howtoplay2 = font.render('the burritos.', False, ('WHITE'))
     titlename = font.render('RAINING TACOS!', False, ('YELLOW'))
     startbutton = font.render('Start!', False, ('WHITE'))
     startbutton_rect = pygame.Rect(0,0,startbutton.get_width(),startbutton.get_height())
     titlename_rect = pygame.Rect(25,25,titlename.get_width(),titlename.get_height())
+    howtoplay_rect = pygame.Rect(25,75,howtoplay.get_width(),howtoplay.get_height())
+    howtoplay2_rect = pygame.Rect(25,110,howtoplay2.get_width(),howtoplay2.get_height())
     startbutton_rect.center = WIDTH / 2, HEIGHT / 2
     while state == States.TITLE:
         for event in pygame.event.get():
@@ -36,9 +50,12 @@ def titlescreen():
         screen.fill(GREEN)
         screen.blit(titlename,titlename_rect)
         screen.blit(startbutton,startbutton_rect)
+        screen.blit(howtoplay,howtoplay_rect)
+        screen.blit(howtoplay2,howtoplay2_rect)
         pygame.display.flip()
 def gameover():
     global running, score, group
+    gameovereffect.play()
     oof = font.render('Game Over!', False, ('YELLOW'))
     tryagain = font.render('Try Again?', False, ('WHITE'))
     gibup = font.render('Exit Game', False, ('WHITE'))
@@ -92,6 +109,7 @@ def gaem():
             if event.type == pygame.QUIT:
                 pygame.quit()
             if event.type == events.gameover:
+                gameovereffect.play()
                 gameover()
         screen.blit(player.sprite, (player.x,player.y))
         pygame.sprite.spritecollide(player,group,True,collision)
@@ -103,6 +121,7 @@ def gaem():
         burritogroup.update()
         if pygame.sprite.spritecollide(player, burritogroup,True):
             gameover()
+            gameovereffect.play()
         pygame.display.flip()
         player.moving()
 while running:
@@ -119,14 +138,3 @@ while running:
             if not running: break
        
 pygame.quit()
-import sys
-import os
-
-def resource_path(relative_path):
-    try:
-    # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-
-    return os.path.join(base_path, relative_path)
